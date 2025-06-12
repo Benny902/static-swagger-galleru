@@ -1,0 +1,19 @@
+<inbound>
+    <base />
+    <cors>
+        <allowed-origins>
+            <origin>https://galleru-docs.azurestaticapps.net</origin>
+            <origin>http://localhost:5500</origin> <!-- Optional: For local dev/testing -->
+        </allowed-origins>
+        <allowed-methods>
+            <method>GET</method>
+        </allowed-methods>
+        <allowed-headers>
+            <header>*</header>
+        </allowed-headers>
+        <expose-headers>
+            <header>*</header>
+        </expose-headers>
+        <max-age>300</max-age>
+    </cors>
+</inbound>
