@@ -1,19 +1,43 @@
-<inbound>
-    <base />
-    <cors>
-        <allowed-origins>
-            <origin>https://galleru-docs.azurestaticapps.net</origin>
-            <origin>http://localhost:5500</origin> <!-- Optional: For local dev/testing -->
-        </allowed-origins>
-        <allowed-methods>
-            <method>GET</method>
-        </allowed-methods>
-        <allowed-headers>
-            <header>*</header>
-        </allowed-headers>
-        <expose-headers>
-            <header>*</header>
-        </expose-headers>
-        <max-age>300</max-age>
-    </cors>
-</inbound>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multi-API Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
+    <style>
+      body { margin: 0; padding: 0; }
+      #topbar { margin: 10px; }
+    </style>
+</head>
+<body>
+    <div id="topbar">
+        <label>Select API: </label>
+        <select id="apiSelector">
+            <option value="https://galleru-dev-apim.azure-api.net/image/swagger/v1/swagger.json">Image Manager</option>
+            <option value="https://galleru-dev-apim.azure-api.net/event/swagger/v1/swagger.json">Event Manager</option>
+            <!-- Add more as needed -->
+        </select>
+    </div>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
+    <script>
+      var ui;
+      function renderSwagger(url) {
+          if(ui) document.getElementById('swagger-ui').innerHTML = '';
+          ui = SwaggerUIBundle({
+              url: url,
+              dom_id: '#swagger-ui',
+              presets: [
+                  SwaggerUIBundle.presets.apis,
+                  SwaggerUIBundle.SwaggerUIStandalonePreset
+              ],
+              layout: "BaseLayout"
+          });
+      }
+      document.getElementById('apiSelector').addEventListener('change', function(e) {
+          renderSwagger(e.target.value);
+      });
+      // Initial load
+      renderSwagger(document.getElementById('apiSelector').value);
+    </script>
+</body>
+</html>
